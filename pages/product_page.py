@@ -2,7 +2,6 @@ from .base_page import BasePage
 from .locators import ProductPageLocators
 from selenium.common.exceptions import NoAlertPresentException
 import math
-import time
 
 
 class ProductPage(BasePage):
