@@ -1,13 +1,10 @@
 from .base_page import BasePage
-from .locators import ProductPageLocators
+from .locators import ProductPageLocators, BasePageLocators
 from selenium.common.exceptions import NoAlertPresentException
 import math
 
 
 class ProductPage(BasePage):
-    def add_product_to_basket(self):
-        self.browser.find_element(*ProductPageLocators.PRODUCT_ADD_TO_BASKET).click()
-   
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
@@ -50,13 +47,13 @@ class ProductPage(BasePage):
             
     def guest_cant_see_success_message_after_adding_product_to_basket(self):
         assert self.is_not_element_present(*ProductPageLocators.MESSAGE_ABOUT_ADDING), \
-        "Success message after adding product to basket is presented, but should not be"
+            "Success message after adding product to basket is presented, but should not be"
         
     def guest_cant_see_success_message(self):
         assert self.is_not_element_present(*ProductPageLocators.MESSAGE_ABOUT_ADDING), \
-        "Success message is presented, but should not be"
+            "Success message is presented, but should not be"
         
     def message_disappeared_after_adding_product_to_basket(self):
         assert self.is_disappeared(*ProductPageLocators.MESSAGE_ABOUT_ADDING), \
-        "Message didn't disappear after adding product to basket"
+            "Message didn't disappear after adding product to basket"
 
