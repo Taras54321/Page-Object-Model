@@ -1,10 +1,13 @@
 from .base_page import BasePage
-from .locators import ProductPageLocators, BasePageLocators
+from .locators import ProductPageLocators
 from selenium.common.exceptions import NoAlertPresentException
 import math
 
 
 class ProductPage(BasePage):
+    def add_product_to_basket(self):
+        self.browser.find_element(*ProductPageLocators.PRODUCT_ADD_TO_BASKET).click()
+   
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
