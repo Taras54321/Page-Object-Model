@@ -1,9 +1,38 @@
-from pages.product_page import ProductPage
 from pages.base_page import BasePage
 from pages.basket_page import BasketPage
+from pages.login_page import LoginPage
+from pages.product_page import ProductPage
 import pytest
 
-link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"
+
+link = "https://selenium1py.pythonanywhere.com"
+
+@pytest.mark.add_to_basket
+class TestUserAddToBasketFromProductPage():
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        self.base_page = BasePage(browser, link)
+        self.login_page = LoginPage(browser, link)
+        self.link = self.base_page.url
+        self.base_page.open()
+        self.base_page.go_to_login_page()
+        self.login_page.register_new_user()
+        self.base_page.should_be_authorized_user()
+        self.base_page.go_to_product_page()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        page = ProductPage(browser, self.link)
+        page.open()
+        page.add_product_to_basket()
+        page.should_be_add_to_basket_button()
+        page.should_be_message_about_adding()
+        page.should_be_message_about_product_name()
+        page.should_be_message_basket_total()
+
+    def test_user_cant_see_success_message(self, browser):
+        page = ProductPage(browser, self.link)
+        page.open()
+        page.guest_cant_see_success_message()    
 
 @pytest.mark.first
 @pytest.mark.parametrize('link', link)
