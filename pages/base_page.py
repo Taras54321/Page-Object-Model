@@ -1,7 +1,8 @@
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .locators import BasePageLocators
+import math
 
 
 class BasePage():
@@ -21,6 +22,7 @@ class BasePage():
         
     def go_to_product_page(self):
         self.browser.find_element(*BasePageLocators.PRODUCT_LINK).click()
+        self.browser.find_element(*BasePageLocators.BOOK_LINK).click()
 
     def is_disappeared(self, how, what, timeout=4):
         try:

@@ -5,6 +5,7 @@ import pytest
 
 
 link = "https://selenium1py.pythonanywhere.com"
+link1 = "https://selenium1py.pythonanywhere.com/accounts/login"
 
 @pytest.mark.first
 class TestLoginFromMainPage():
@@ -19,22 +20,22 @@ class TestLoginFromMainPage():
         page = MainPage(browser, link)
         page.open()
         page.should_be_login_link()
-    
+
 @pytest.mark.second
 def test_url_need_to_be_correct(browser):
-    page = LoginPage(browser, link)
+    page = LoginPage(browser, link1)
     page.open()
     page.should_be_login_url()
 
 @pytest.mark.second    
 def test_guest_should_see_login_form(browser):
-    page = LoginPage(browser, link)
+    page = LoginPage(browser, link1)
     page.open()
     page.should_be_login_form()
 
 @pytest.mark.second   
 def test_guest_should_see_register_form(browser):
-    page = LoginPage(browser, link)
+    page = LoginPage(browser, link1)
     page.open()
     page.should_be_register_form()
 
@@ -44,7 +45,7 @@ def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
     page.open()
     # page.add_product_to_basket()
     page.go_to_basket_page()
-    page = BasketPage(browser, link)
+    page = BasketPage(browser, browser.current_url)
     page.should_be_text_of_empty_basket()
     page.should_be_empty_basket()
 
